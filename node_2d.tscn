@@ -1,0 +1,228 @@
+[gd_scene load_steps=21 format=3 uid="uid://uu3qstxso02n"]
+
+[ext_resource type="Texture2D" uid="uid://d0k170kl8pmeg" path="res://sprite_0.png" id="1_avs71"]
+[ext_resource type="Script" path="res://movement.gd" id="1_lkj0a"]
+[ext_resource type="Texture2D" uid="uid://csqyqf16a1lqc" path="res://standing.png" id="2_jcvjy"]
+[ext_resource type="Texture2D" uid="uid://ptq25i48idkc" path="res://sprite_1.png" id="2_td122"]
+[ext_resource type="Texture2D" uid="uid://br20b1ap2gx22" path="res://sprite_2.png" id="3_45jv0"]
+[ext_resource type="Texture2D" uid="uid://y762kctfnobm" path="res://sprite_3.png" id="4_gb7fk"]
+[ext_resource type="Texture2D" uid="uid://cd6l4221kr6as" path="res://sprite_4.png" id="5_erujx"]
+[ext_resource type="Texture2D" uid="uid://bnguf68b7rk5i" path="res://sprite_5.png" id="6_8umqo"]
+[ext_resource type="Script" path="res://cameraScript.gd" id="8_ko7uo"]
+[ext_resource type="FontFile" uid="uid://diccoh5fwquqg" path="res://Mojang-Bold.ttf" id="10_xmiwn"]
+[ext_resource type="Script" path="res://RichTextLabel.gd" id="10_yn82d"]
+[ext_resource type="Script" path="res://googly.gd" id="12_wmytk"]
+[ext_resource type="Texture2D" uid="uid://bxipoc0ng8nkl" path="res://enemy_standing.png" id="12_yvvy7"]
+[ext_resource type="Texture2D" uid="uid://bp68rhn8yto6c" path="res://enemy_0.png" id="13_p3xp1"]
+[ext_resource type="Texture2D" uid="uid://dn6e7nccd087a" path="res://enemy_1.png" id="14_qks31"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nv08q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jcvjy")
+}],
+"loop": true,
+"name": &"standing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_avs71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_td122")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_45jv0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_gb7fk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_erujx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8umqo")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_opojk"]
+size = Vector2(24, 32)
+
+[sub_resource type="Theme" id="Theme_7yse7"]
+default_font = ExtResource("10_xmiwn")
+default_font_size = 24
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_umn0m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_yvvy7")
+}],
+"loop": true,
+"name": &"standing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_p3xp1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_qks31")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwb88"]
+size = Vector2(32, 32)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" type="CharacterBody2D" parent="." groups=["Player"]]
+disable_mode = 2
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_lkj0a")
+speed = 20000
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_nv08q")
+animation = &"standing"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource("RectangleShape2D_opojk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("8_ko7uo")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D"]
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -476.0
+offset_bottom = -284.0
+theme = SubResource("Theme_7yse7")
+text = "fesgsh"
+autowrap_mode = 0
+script = ExtResource("10_yn82d")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="googly" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[node name="googly2" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly2"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly2"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[node name="googly3" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly3"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly3"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[node name="googly4" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly4"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly4"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[node name="googly5" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly5"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly5"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[node name="googly6" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly6"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly6"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[node name="googly7" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly7"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly7"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[node name="googly8" type="Area2D" parent="Node2D"]
+position = Vector2(10000, 0)
+collision_mask = 2
+script = ExtResource("12_wmytk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/googly8"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_umn0m")
+animation = &"walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/googly8"]
+shape = SubResource("RectangleShape2D_iwb88")
+
+[connection signal="body_entered" from="Node2D/googly" to="Node2D/googly" method="_on_body_entered"]
+[connection signal="body_entered" from="Node2D/googly2" to="Node2D/googly2" method="_on_body_entered"]
+[connection signal="body_entered" from="Node2D/googly3" to="Node2D/googly3" method="_on_body_entered"]
+[connection signal="body_entered" from="Node2D/googly4" to="Node2D/googly4" method="_on_body_entered"]
+[connection signal="body_entered" from="Node2D/googly5" to="Node2D/googly5" method="_on_body_entered"]
+[connection signal="body_entered" from="Node2D/googly6" to="Node2D/googly6" method="_on_body_entered"]
+[connection signal="body_entered" from="Node2D/googly7" to="Node2D/googly7" method="_on_body_entered"]
+[connection signal="body_entered" from="Node2D/googly8" to="Node2D/googly8" method="_on_body_entered"]
